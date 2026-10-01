@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<meta
+  name="theme-color"
+  content="#030609"
+>
+
+<title>Gui Pecinha — Links</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+
+  min-height:100vh;
+
+  background:
+    radial-gradient(
+      circle at 50% -10%,
+      #102631 0%,
+      transparent 32%
+    ),
+    radial-gradient(
+      circle at 0% 70%,
+      #08151b 0%,
+      transparent 28%
+    ),
+    linear-gradient(
+      135deg,
+      #010304,
+      #050a0d 50%,
+      #010304
+    );
+
+  color:#fff;
+
+  font-family:
+    Inter,
+    Arial,
+    sans-serif;
+
+  display:flex;
+  justify-content:center;
+
+  overflow-x:hidden;
+
+  position:relative;
+}
+
+
+/* =========================================
+   FUNDO
+========================================= */
+
+body::before{
+
+  content:"";
+
+  position:fixed;
+
+  inset:-30%;
+
+  z-index:-2;
+
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(0,180,230,.07),
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 15% 80%,
+      rgba(0,130,180,.035),
+      transparent 25%
+    );
+
+  filter:blur(50px);
+
+  pointer-events:none;
+}
+
+body::after{
+
+  content:"";
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:-1;
+
+  pointer-events:none;
+
+  background:
+    radial-gradient(
+      ellipse at center,
+      transparent 35%,
+      rgba(0,0,0,.5) 100%
+    );
+}
+
+
+/* =========================================
+   TELA DO SUSTO
+========================================= */
+
+#jumpscare-screen{
+
+  position:fixed;
+
+  inset:0;
+
+  width:100vw;
+  height:100vh;
+
+  z-index:9999;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  flex-direction:column;
+
+  background:#000;
+
+  cursor:pointer;
+
+  overflow:hidden;
+
+  transition:
+    opacity .8s ease,
+    visibility .8s ease;
+}
+
+
+#jumpscare-screen.hidden{
+
+  opacity:0;
+
+  visibility:hidden;
+
+  pointer-events:none;
+}
+
+
+/* =========================================
+   MENSAGEM INICIAL
+========================================= */
+
+#enter-message{
+
+  position:relative;
+
+  z-index:2;
+
+  text-align:center;
+
+  color:#777;
+
+  font-size:13px;
+
+  letter-spacing:2px;
+
+  text-transform:uppercase;
+
+  animation:pulse 2s infinite;
+}
+
+
+#enter-message span{
+
+  display:block;
+
+  margin-top:10px;
+
+  color:#333;
+
+  font-size:10px;
+
+  letter-spacing:1px;
+
+  text-transform:none;
+}
+
+
+@keyframes pulse{
+
+  0%,
+  100%{
+    opacity:.45;
+  }
+
+  50%{
+    opacity:1;
+  }
+
+}
+
+
+/* =========================================
+   IMAGEM DO SUSTO
+========================================= */
+
+#jumpscare-image{
+
+  position:absolute;
+
+  top:0;
+  left:0;
+
+  width:90vw;
+  height:90vh;
+
+  object-fit:contain;
+
+  opacity:0;
+
+  z-index:1;
+
+  transform:scale(1);
+
+  transition:
+    opacity .05s linear;
+
+  pointer-events:none;
+}
+
+
+/* MOSTRA A IMAGEM */
+
+#jumpscare-screen.scare #jumpscare-image{
+
+  opacity:1;
+
+  transform:scale(1);
+
+}
+
+
+#jumpscare-screen.scare #enter-message{
+
+  display:none;
+}
+
+
+/* =========================================
+   FLASH
+========================================= */
+
+#flash{
+
+  position:absolute;
+
+  inset:0;
+
+  width:100%;
+  height:100%;
+
+  background:#fff;
+
+  opacity:0;
+
+  z-index:3;
+
+  pointer-events:none;
+}
+
+
+#jumpscare-screen.scare #flash{
+
+  animation:flash .12s ease-out;
+}
+
+
+@keyframes flash{
+
+  0%{
+    opacity:.8;
+  }
+
+  100%{
+    opacity:0;
+  }
+
+}
+
+
+/* =========================================
+   CONTAINER
+========================================= */
+
+.container{
+
+  width:min(100%,620px);
+
+  padding:
+    55px
+    22px
+    38px;
+}
+
+
+/* =========================================
+   PERFIL
+========================================= */
+
+.profile{
+
+  text-align:center;
+}
+
+
+.avatar{
+
+  width:108px;
+  height:108px;
+
+  margin:auto;
+
+  border-radius:50%;
+
+  object-fit:cover;
+
+  background:#080d10;
+
+  border:
+    1px solid
+    rgba(120,210,240,.25);
+
+  box-shadow:
+
+    0 0 0 5px
+    rgba(0,180,230,.025),
+
+    0 0 30px
+    rgba(0,180,230,.08),
+
+    0 15px 45px
+    rgba(0,0,0,.7);
+
+  transition:.3s ease;
+}
+
+
+.avatar:hover{
+
+  transform:
+    translateY(-3px)
+    scale(1.02);
+
+  border-color:
+    rgba(130,225,255,.4);
+
+  box-shadow:
+
+    0 0 0 6px
+    rgba(0,180,230,.035),
+
+    0 0 40px
+    rgba(0,190,240,.13),
+
+    0 18px 50px
+    rgba(0,0,0,.75);
+}
+
+
+.name{
+
+  margin-top:18px;
+
+  font-size:26px;
+
+  font-weight:800;
+
+  letter-spacing:-.7px;
+
+  text-shadow:
+    0 2px 18px
+    rgba(0,180,230,.08);
+}
+
+
+.handle{
+
+  margin-top:6px;
+
+  color:#70858d;
+
+  font-size:14px;
+}
+
+
+.bio{
+
+  max-width:440px;
+
+  margin:
+    12px
+    auto
+    16px;
+
+  color:#9eafb5;
+
+  font-size:14px;
+
+  line-height:1.6;
+}
+
+
+/* =========================================
+   LINKS
+========================================= */
+
+.links{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+}
+
+
+.link{
+
+  position:relative;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  min-height:62px;
+
+  padding:
+    0
+    55px;
+
+  color:#fff;
+
+  text-decoration:none;
+
+  font-size:14px;
+
+  font-weight:600;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.07),
+      rgba(255,255,255,.018)
+    );
+
+  border:
+    1px solid
+    rgba(120,210,235,.19);
+
+  border-radius:18px;
+
+  box-shadow:
+
+    inset
+    0 1px 0
+    rgba(255,255,255,.08),
+
+    0 10px 30px
+    rgba(0,0,0,.6),
+
+    0 0 20px
+    rgba(0,160,210,.025);
+
+  backdrop-filter:blur(18px);
+
+  transition:
+    transform .25s ease,
+    border-color .25s ease,
+    box-shadow .25s ease,
+    background .25s ease;
+}
+
+
+.link:hover{
+
+  transform:
+    translateY(-3px);
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,.095),
+      rgba(0,160,210,.035)
+    );
+
+  border-color:
+    rgba(100,215,240,.4);
+
+  box-shadow:
+
+    inset
+    0 1px 0
+    rgba(255,255,255,.11),
+
+    0 14px 35px
+    rgba(0,0,0,.7),
+
+    0 0 25px
+    rgba(0,180,230,.08);
+}
+
+
+.link .steam-icon{
+
+  position:absolute;
+
+  left:19px;
+
+  width:20px;
+  height:20px;
+
+  object-fit:contain;
+
+  filter:
+    brightness(0)
+    invert(1);
+
+  opacity:.9;
+}
+
+
+.link .arrow{
+
+  position:absolute;
+
+  right:18px;
+
+  color:#657d87;
+
+  font-size:23px;
+
+  transition:.2s;
+}
+
+
+.link:hover .arrow{
+
+  color:#a9e7f5;
+
+  transform:
+    translateX(2px);
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.footer{
+
+  text-align:center;
+
+  color:#465b63;
+
+  font-size:10px;
+
+  margin-top:24px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media(max-width:500px){
+
+  .container{
+    padding-top:35px;
+  }
+
+  .name{
+    font-size:23px;
+  }
+
+  .avatar{
+    width:100px;
+    height:100px;
+  }
+
+  .link{
+    min-height:60px;
+  }
+
+  #jumpscare-image{
+    width:90vw;
+    height:90vh;
+  }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================
+     TELA INICIAL / SUSTO
+====================================== -->
+
+<div id="jumpscare-screen">
+
+  <img
+    id="jumpscare-image"
+    src="jumpscare.jpg"
+    alt=""
+  >
+
+  <div id="enter-message">
+
+    CLIQUE PARA ENTRAR
+
+    <span>
+      ...
+    </span>
+
+  </div>
+
+  <div id="flash"></div>
+
+</div>
+
+
+<!-- =====================================
+     SITE
+====================================== -->
+
+<main class="container">
+
+
+  <!-- PERFIL -->
+
+  <section class="profile">
+
+
+    <img
+      class="avatar"
+      src="avatar.jpg"
+      alt="Foto de perfil"
+    >
+
+
+    <h1 class="name">
+      Gui Pecinha
+    </h1>
+
+
+    <p class="handle">
+      @xarolao
+    </p>
+
+
+    <p class="bio">
+      .
+    </p>
+
+
+  </section>
+
+
+  <!-- STEAM -->
+
+  <div class="links">
+
+
+    <a
+      class="link"
+      href="https://steamcommunity.com/id/guiboyzao/"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <img
+        class="steam-icon"
+        src="steam.svg"
+        alt="Steam"
+      >
+
+      Steam
+
+      <span class="arrow">
+        ›
+      </span>
+
+    </a>
+
+
+    <a
+      class="link"
+      href="https://steamcommunity.com/id/guiboliviaa"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+
+      <img
+        class="steam-icon"
+        src="steam.svg"
+        alt="Steam secundária"
+      >
+
+      Steam secundária
+
+      <span class="arrow">
+        ›
+      </span>
+
+    </a>
+
+
+  </div>
+
+
+  <!-- FOOTER -->
+
+  <div class="footer">
+
+    © 2026 · pecinha's software
+
+  </div>
+
+
+</main>
+
+
+<!-- =====================================
+     JAVASCRIPT
+====================================== -->
+
+<script>
+
+const screen =
+  document.getElementById(
+    'jumpscare-screen'
+  );
+
+let activated = false;
+
+
+screen.addEventListener(
+  'click',
+  function(){
+
+    if(activated)
+      return;
+
+    activated = true;
+
+
+    /* ==========================
+       MOSTRA O JUMPSCARE
+    ========================== */
+
+    screen.classList.add(
+      'scare'
+    );
+
+
+    /* ==========================
+       TOCA O SOM
+    ========================== */
+
+    const sound =
+      new Audio(
+        'jumpscare.mp3'
+      );
+
+    sound.volume = 1;
+
+    sound.currentTime = 0;
+
+    sound.play().catch(
+      function(error){
+
+        console.log(
+          'Erro no áudio:',
+          error
+        );
+
+      }
+    );
+
+
+    /* ==========================
+       TEMPO DO SUSTO
+    ========================== */
+
+    setTimeout(
+      function(){
+
+        screen.classList.add(
+          'hidden'
+        );
+
+      },
+      2000
+    
+    );
+
+  }
+);
+
+</script>
+
+
+</body>
+
+</html>
